@@ -26,7 +26,7 @@
     * { box-sizing: border-box; }
     [hidden] { display: none !important; }
     html { scroll-behavior: smooth; }
-    body { margin: 0; color: var(--text); background: var(--bg); min-width: 320px; }
+    body { margin: 0; color: var(--text); background: var(--bg); min-width: 320px; overflow-x: hidden; }
     button,input,select { font: inherit; }
     button { cursor: pointer; }
     button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible { outline: 3px solid #f27f88; outline-offset: 3px; }
@@ -65,7 +65,8 @@
     .tiny-btn { border: none; width: 31px; height: 31px; background: transparent; border-radius: 8px; color: #6f707d; font-size: 23px; line-height: 1; }
     .tiny-btn:hover { background: white; color: var(--red); }
     .months-wrap { border-top: 1px solid #f1f1f3; }
-    .months-scroll { display: flex; overflow-x: auto; scrollbar-width: thin; scrollbar-color: #d8d8e1 transparent; gap: 5px; padding-top: 10px; padding-bottom: 10px; }
+    .months-scroll { display: flex; overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none; scrollbar-color: #d8d8e1 transparent; gap: 5px; padding-top: 10px; padding-bottom: 10px; }
+    .months-scroll::-webkit-scrollbar { display: none; }
     .month-btn { flex: 1 0 auto; min-width: 76px; border: none; background: transparent; border-radius: 10px; color: #72717e; padding: 10px 8px; font-weight: 650; font-size: 12px; }
     .month-btn:hover { background: #fff3f4; color: #ca1426; }
     .month-btn.active { color: white; background: var(--red); box-shadow: 0 4px 13px #ed233238; }
