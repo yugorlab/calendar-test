@@ -25,8 +25,8 @@
     }
     * { box-sizing: border-box; }
     [hidden] { display: none !important; }
-    html { scroll-behavior: smooth; }
-    body { margin: 0; color: var(--text); background: var(--bg); min-width: 320px; overflow-x: hidden; }
+    html { scroll-behavior: smooth; overflow-x: hidden; width: 100%; }
+    body { margin: 0; color: var(--text); background: var(--bg); min-width: 320px; overflow-x: hidden;  width: 100%; position: relative; }
     button,input,select { font: inherit; }
     button { cursor: pointer; }
     button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible { outline: 3px solid #f27f88; outline-offset: 3px; }
@@ -147,8 +147,8 @@
     footer a:hover { text-decoration: underline; }
     dialog { width: min(700px, calc(100% - 28px)); border: none; padding: 0; border-radius: 21px; box-shadow: 0 22px 90px #13071240; max-height: min(90vh, 900px); overflow: auto; }
     dialog::backdrop { background: #18131ab3; backdrop-filter: blur(3px); }
-    .detail-cover { height: 250px; display: flex; align-items: center; justify-content: center; padding: 20px; background: linear-gradient(130deg,#f7ced3,#f2ecef); position: relative; overflow: hidden; isolation: isolate; }
-    .detail-cover .cover-main { height: 100%; width: 100%; object-fit: contain; position: relative; z-index: 1; filter: drop-shadow(0 6px 12px #00000025); }
+    .detail-cover { height: 250px; display: flex; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box; background: linear-gradient(130deg,#f7ced3,#f2ecef); position: relative; overflow: hidden; isolation: isolate; }
+    .detail-cover .cover-main { max-width: 100%; max-height: 100%; height: auto; width: auto; object-fit: contain; position: relative; z-index: 1; filter: drop-shadow(0 6px 12px #00000025); }
     .detail-cover .cover-star { font-size: 94px; }
     .close-detail { position: absolute; top: 14px; right: 14px; width: 35px; height: 35px; display: grid; place-items: center; border-radius: 50%; border: none; background: #fffffff0; color: #514953; font-size: 25px; z-index: 2; }
     .detail-inner { padding: 26px 30px 32px; }
@@ -194,7 +194,7 @@
       .event-name { min-height: unset; }
       .page-heading { align-items: start; }
       .today-btn { padding: 10px; }
-      .calendar-board { overflow-x: auto; }
+      .calendar-board { overflow-x: auto; max-width: 100%; }
       .calendar-weekdays,.calendar-days { min-width: 700px; }
       .calendar-hint { display: block; }
       .detail-inner { padding: 23px 19px; }
