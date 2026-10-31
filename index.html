@@ -226,7 +226,7 @@
     <div class="filters-wrap"><div class="shell filters"><div class="filter-list" id="statusFilters" role="group" aria-label="Фильтр по статусу"></div><div class="view-switch" role="group" aria-label="Режим отображения"><button type="button" id="cardsView" class="view-btn active" aria-pressed="true" title="Карточки"><svg class="icon"><use href="#i-cards"/></svg>Карточки</button><button type="button" id="calendarView" class="view-btn" aria-pressed="false" title="Календарь"><svg class="icon"><use href="#i-cal"/></svg>Календарь</button></div></div></div>
   </section>
   <main class="shell">
-    <div class="info-banner" id="sourceBanner"><svg class="icon" aria-hidden="true"><use href="#i-info"/></svg><span id="sourceText">Превью: показаны ивенты со скриншота. После первого запуска синхронизации на GitHub данные заменятся на календарь Official Kyodo Events!</span></div>
+    <div class="info-banner" id="sourceBanner"><svg class="icon" aria-hidden="true"><use href="#i-info"/></svg><span id="sourceText">После первого запуска синхронизации данные заменятся на календарь Official Kyodo Events!</span></div>
     <div class="page-heading"><div><div class="eyebrow">Календарь ивентов</div><h1 id="pageTitle">Октябрь 2026</h1><div class="heading-note" id="eventCount">Загрузка ивентов...</div></div><button type="button" id="todayButton" class="today-btn">Текущий месяц ↗</button></div>
     <section id="cards" class="cards" aria-label="Карточки ивентов"></section>
     <section id="calendar" aria-label="Календарная сетка" hidden></section>
@@ -236,8 +236,7 @@
   <dialog id="detailsDialog" aria-labelledby="dialogTitle"><div id="detailBody"></div></dialog>
   <script>
     'use strict';
-    // Demo events are transcribed from the supplied calendar screenshot. They are NOT a live Google Calendar feed.
-    // Dates are inclusive and in YYYY-MM-DD format. A future importer should normalize timed and all-day events.
+    
     const DEMO_EVENTS = [
       { id: 'masquerade', name: 'Masquerade: Nearing shadows', startDate:'2026-09-23', endDate:'2026-09-30', language:'DE', circle:'', circleUrl:'', prize:'', prizeImage:'' },
       { id: 'mysterious-stars', name: 'Mysterious Stars', startDate:'2026-09-28', endDate:'2026-10-05', language:'RU', circle:'', circleUrl:'', prize:'', prizeImage:'' },
