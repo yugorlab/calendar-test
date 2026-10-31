@@ -146,8 +146,8 @@
     footer a:hover { text-decoration: underline; }
     dialog { width: min(700px, calc(100% - 28px)); border: none; padding: 0; border-radius: 21px; box-shadow: 0 22px 90px #13071240; max-height: min(90vh, 900px); overflow: auto; }
     dialog::backdrop { background: #18131ab3; backdrop-filter: blur(3px); }
-    .detail-cover { height: 250px; display: grid; place-items: center; background: linear-gradient(130deg,#f7ced3,#f2ecef); position: relative; overflow: hidden; isolation: isolate; }
-    .detail-cover .cover-main { height: 100%; width: 100%; object-fit: contain; padding: 25px 80px; box-sizing: border-box; position: relative; z-index: 1; filter: drop-shadow(0 6px 12px #00000025); }
+    .detail-cover { height: 250px; display: flex; align-items: center; justify-content: center; padding: 20px; background: linear-gradient(130deg,#f7ced3,#f2ecef); position: relative; overflow: hidden; isolation: isolate; }
+    .detail-cover .cover-main { height: 100%; width: 100%; object-fit: contain; position: relative; z-index: 1; filter: drop-shadow(0 6px 12px #00000025); }
     .detail-cover .cover-star { font-size: 94px; }
     .close-detail { position: absolute; top: 14px; right: 14px; width: 35px; height: 35px; display: grid; place-items: center; border-radius: 50%; border: none; background: #fffffff0; color: #514953; font-size: 25px; z-index: 2; }
     .detail-inner { padding: 26px 30px 32px; }
@@ -200,6 +200,9 @@
       .detail-info-row { grid-template-columns: 95px minmax(0,1fr); }
     }
     @media (prefers-reduced-motion: reduce) { *,*:before,*:after { animation-duration:.01ms!important; scroll-behavior:auto!important; transition:none!important; } }
+    body.modal-open {
+      overflow: hidden;
+    }
   </style>
 </head>
 <body>
@@ -355,6 +358,7 @@
       ];
       $('detailBody').innerHTML=`${coverHtml(e,true)}<div class="detail-inner"><div class="detail-eyebrow">Kyodo · Ивент</div><h2 id="dialogTitle" class="detail-title">${esc(e.name)}</h2><div class="detail-headline"><span class="status status-${statusOf(e)}">${STATUS_NAMES[statusOf(e)]}</span><span class="lang-chip">${esc(e.language||'—')}</span></div><dl class="detail-info">${rows.map(([k,v])=>`<div class="detail-info-row"><dt>${esc(k)}</dt><dd>${k==='Круг' && circleHref ? `<a href="${esc(circleHref)}" target="_blank" rel="noopener noreferrer">${esc(v)} ↗</a>` : esc(v)}</dd></div>`).join('')}</dl><div class="detail-legal">Источник: публичный календарь Official Kyodo Events! · Часовой пояс America/New_York.</div></div>`;
       $('detailsDialog').showModal();
+      document.body.classList.add('modal-open');
       $('closeDetail').addEventListener('click',()=>$('detailsDialog').close());
     }
     function render() {
@@ -385,6 +389,7 @@
     $('cardsView').addEventListener('click',()=>{state.mode='cards';render();});
     $('calendarView').addEventListener('click',()=>{state.mode='calendar';render();});
     $('detailsDialog').addEventListener('click',e=>{if(e.target===$('detailsDialog'))$('detailsDialog').close();});
+    $('detailsDialog').addEventListener('close', () => {document.body.classList.remove('modal-open');});
     // Default view uses the calendar's local date, not visitor's local time zone.
     state.year = Number(todayISO().slice(0,4)); state.month = Number(todayISO().slice(5,7))-1;
     renderLanguageOptions(); render();
