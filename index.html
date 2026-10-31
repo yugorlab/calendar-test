@@ -306,7 +306,8 @@
       const container = $('months');
       if (active && container.scrollWidth > container.clientWidth) {
         const scrollLeft = active.offsetLeft - container.offsetLeft - (container.clientWidth / 2) + (active.clientWidth / 2); container.scrollTo({ left: scrollLeft, behavior: 'smooth' });
-}
+      }
+    }
     function renderLanguageOptions() {
       $('languageFilter').innerHTML = '<option value="all">Все языки</option>' + Object.entries(LANGUAGE_NAMES)
         .map(([code,name])=>`<option value="${code}">${name} (${code})</option>`).join('');
