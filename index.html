@@ -93,14 +93,16 @@
     .cards { display: grid; gap: 19px; grid-template-columns: repeat(3, minmax(0,1fr)); }
     .event-card { display: flex; flex-direction: column; overflow: hidden; border: 1px solid #ebeaf0; border-radius: 19px; background: #fff; box-shadow: var(--shadow); min-height: 310px; transition: transform .15s,box-shadow .15s; }
     .event-card:hover { transform: translateY(-3px); box-shadow: 0 10px 35px rgba(33,31,45,.10); }
-    .event-cover { height: 150px; position: relative; overflow: hidden; background: linear-gradient(130deg,#ffeded,#f7dadd); display: grid; place-items: center; }
+    .event-cover { height: 180px; position: relative; overflow: hidden; background: linear-gradient(130deg,#ffeded,#f7dadd); display: grid; place-items: center; isolation: isolate; }
     .event-cover.tone-1 { background: linear-gradient(125deg, #e9efff, #d4dcf5); }
     .event-cover.tone-2 { background: linear-gradient(125deg, #efe8ff, #e1d4fc); }
     .event-cover.tone-3 { background: linear-gradient(125deg, #f7e6e2, #efc4bf); }
     .event-cover.tone-4 { background: linear-gradient(125deg, #e2f3f0, #c9e9e2); }
     .event-cover::before, .event-cover::after { content: ""; position: absolute; display: block; width: 178px; height: 178px; border: 1px solid #ffffff8a; border-radius: 44px; transform: rotate(34deg); }
     .event-cover::after { width: 112px; height: 112px; border-radius: 50%; background: #ffffff24; transform: translate(65px,-25px); }
-    .event-cover img { width: 100%; height: 100%; object-fit: contain; position: relative; z-index: 1; }
+    .event-cover .cover-blur, .detail-cover .cover-blur { position: absolute; inset: -18px; width: calc(100% + 36px); height: calc(100% + 36px); object-fit: cover; filter: blur(19px) brightness(.62) saturate(1.12); transform: scale(1.04); z-index: -1; opacity: .95; }
+    .event-cover .cover-main { width: 100%; height: 100%; object-fit: contain; position: relative; z-index: 1; filter: drop-shadow(0 5px 10px #00000025); }
+    .event-cover .cover-shade, .detail-cover .cover-shade { position: absolute; inset: 0; background: linear-gradient(90deg,#00000018,transparent 24%,transparent 76%,#00000018); z-index: 0; pointer-events: none; }
     .cover-star { color: #ffffffcf; font-size: 79px; line-height: 1; z-index: 1; filter: drop-shadow(0 6px 10px #9b6c902b); user-select: none; }
     .cover-caption { position: absolute; z-index: 2; bottom: 12px; left: 14px; background: #ffffffd9; border: 1px solid #ffffffa0; border-radius: 8px; font-size: 10px; color: #6c6570; padding: 6px 8px; font-weight: 650; }
     .cover-language { position: absolute; top: 12px; left: 13px; z-index: 2; color: #242431; background: #fffffff2; box-shadow: 0 2px 8px #00000012; font-weight: 800; font-size: 11px; padding: 6px 9px; border-radius: 8px; }
@@ -144,8 +146,8 @@
     footer a:hover { text-decoration: underline; }
     dialog { width: min(700px, calc(100% - 28px)); border: none; padding: 0; border-radius: 21px; box-shadow: 0 22px 90px #13071240; max-height: min(90vh, 900px); overflow: auto; }
     dialog::backdrop { background: #18131ab3; backdrop-filter: blur(3px); }
-    .detail-cover { height: 186px; display: grid; place-items: center; background: linear-gradient(130deg,#f7ced3,#f2ecef); position: relative; overflow: hidden; }
-    .detail-cover img { height: 100%; width: 100%; object-fit: contain; }
+    .detail-cover { height: 250px; display: grid; place-items: center; background: linear-gradient(130deg,#f7ced3,#f2ecef); position: relative; overflow: hidden; isolation: isolate; }
+    .detail-cover .cover-main { height: 100%; width: 100%; object-fit: contain; position: relative; z-index: 1; filter: drop-shadow(0 6px 12px #00000025); }
     .detail-cover .cover-star { font-size: 94px; }
     .close-detail { position: absolute; top: 14px; right: 14px; width: 35px; height: 35px; display: grid; place-items: center; border-radius: 50%; border: none; background: #fffffff0; color: #514953; font-size: 25px; z-index: 2; }
     .detail-inner { padding: 26px 30px 32px; }
@@ -230,7 +232,8 @@
   <dialog id="detailsDialog" aria-labelledby="dialogTitle"><div id="detailBody"></div></dialog>
   <script>
     'use strict';
-   
+    // Demo events are transcribed from the supplied calendar screenshot. They are NOT a live Google Calendar feed.
+    // Dates are inclusive and in YYYY-MM-DD format. A future importer should normalize timed and all-day events.
     const DEMO_EVENTS = [
       { id: 'masquerade', name: 'Masquerade: Nearing shadows', startDate:'2026-09-23', endDate:'2026-09-30', language:'DE', circle:'', circleUrl:'', prize:'', prizeImage:'' },
       { id: 'mysterious-stars', name: 'Mysterious Stars', startDate:'2026-09-28', endDate:'2026-10-05', language:'RU', circle:'', circleUrl:'', prize:'', prizeImage:'' },
@@ -285,9 +288,12 @@
     function coverTone(e) { let sum=0; for(let i=0;i<e.name.length;i++) sum += e.name.charCodeAt(i); return 'tone-'+(sum%5); }
     function coverHtml(e, isDetail=false) {
       const src = safeUrl(e.prizeImage);
-      const img = src ? `<img src="${esc(src)}" alt="${esc(e.prize||'Превью рамки')}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.hidden=false"><span class="cover-star" hidden>✦</span>` : `<span class="cover-star" aria-hidden="true">✦</span>`;
-      if (isDetail) return `<div class="detail-cover ${coverTone(e)}">${img}<button type="button" class="close-detail" id="closeDetail" aria-label="Закрыть">×</button></div>`;
-      return `<div class="event-cover ${coverTone(e)}"><span class="cover-language">${esc(e.language||'—')}</span>${img}${src?'':`<span class="cover-caption">Нет превью рамки</span>`}</div>`;
+      const fallback = `<span class="cover-star" aria-hidden="true">✦</span>`;
+      const images = src
+        ? `<img class="cover-blur" src="${esc(src)}" alt="" aria-hidden="true" loading="lazy" onerror="this.style.display='none'"><span class="cover-shade" aria-hidden="true"></span><img class="cover-main" src="${esc(src)}" alt="${esc(e.prize||'Превью рамки')}" loading="lazy" onerror="this.style.display='none';this.parentElement.querySelector('.cover-blur')?.remove();this.nextElementSibling.hidden=false"><span class="cover-star" hidden aria-hidden="true">✦</span>`
+        : fallback;
+      if (isDetail) return `<div class="detail-cover ${coverTone(e)}">${images}<button type="button" class="close-detail" id="closeDetail" aria-label="Закрыть">×</button></div>`;
+      return `<div class="event-cover ${coverTone(e)}"><span class="cover-language">${esc(e.language||'—')}</span>${images}${src?'':`<span class="cover-caption">Нет превью рамки</span>`}</div>`;
     }
     function renderMonths() {
       $('yearLabel').textContent=state.year;
