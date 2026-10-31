@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ec202e">
+  <meta name="description" content="Ивенты Kyodo по месяцам: поиск, фильтры по языку и статусу, календарь и рамки.">
+  <title>Kyodo Events — календарь ивентов</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+      --red: #ed2332;
+      --red-dark: #bf1424;
+      --red-soft: #fff0f1;
+      --text: #22212a;
+      --muted: #767785;
+      --line: #eaeaf0;
+      --bg: #f7f7f9;
+      --white: #ffffff;
+      --shadow: 0 7px 30px rgba(39,37,58,.055);
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; color: var(--text); background: var(--bg); min-width: 320px; }
+    button,input,select { font: inherit; }
+    button { cursor: pointer; }
+    button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible { outline: 3px solid #f27f88; outline-offset: 3px; }
+    .shell { max-width: 1260px; margin-inline: auto; padding-inline: 24px; }
+    .topbar {
+      min-height: 94px; background:
+      radial-gradient(circle at 83% 27%, rgba(255,255,255,.11) 0 3px, transparent 4px),
+      radial-gradient(circle at 30% 74%, rgba(255,255,255,.075) 0 20px, transparent 21px),
+      repeating-linear-gradient(130deg, transparent 0 90px, rgba(255,255,255,.035) 90px 92px),
+      linear-gradient(115deg, #f0444d, #eb1b2c 63%, #d71429);
+      color: white;
+    }
+    .brand-row { min-height: 94px; display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+    .brand { display: flex; align-items: center; gap: 14px; }
+    .brand-icon { height: 51px; width: 51px; display: grid; place-items: center; color: var(--red); background: white; border-radius: 16px; font-size: 29px; box-shadow: 0 7px 16px #98001d2e; transform: rotate(-5deg); }
+    .brand-icon span { transform: rotate(5deg); }
+    .brand-title { font-size: clamp(23px,4vw,30px); font-weight: 900; letter-spacing: -.9px; line-height: 1.05; }
+    .brand-subtitle { font-size: 11px; font-weight: 600; opacity: .88; letter-spacing: .7px; text-transform: uppercase; margin-top: 5px; }
+    .brand-right { display: flex; align-items: center; gap: 12px; }
+    .brand-tag { font-size: 11px; font-weight: 750; letter-spacing: .6px; text-transform: uppercase; border: 1px solid #ffffff6e; color: white; padding: 8px 12px; border-radius: 50px; }
+    .toolbar { position: sticky; top: 0; z-index: 5; background: #fff; box-shadow: 0 6px 22px rgba(25,23,37,.05); border-bottom: 1px solid var(--line); }
+    .tool-row { display: flex; justify-content: space-between; align-items: center; gap: 13px; padding-top: 15px; padding-bottom: 12px; }
+    .search { display: flex; align-items: center; gap: 9px; flex: 1 1 420px; max-width: 580px; border: 1px solid #e4e4e9; background: #f7f7f9; padding: 0 13px; height: 43px; border-radius: 14px; color: #9999a4; }
+    .search:focus-within { border-color: #ff777f; box-shadow: 0 0 0 3px #f6d8db; background: white; }
+    .icon { width: 17px; height: 17px; flex: none; display: inline-block; vertical-align: middle; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+    .search input { border: 0; outline: 0; background: transparent; width: 100%; color: var(--text); font-size: 13px; min-width: 0; }
+    .search input::placeholder { color: #9b9ba6; }
+    .clear-search { border: none; background: none; color: #9393a0; font-size: 23px; width: 22px; display: none; align-items: center; justify-content: center; }
+    .clear-search.visible { display: flex; }
+    .settings { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    .select-wrap { position: relative; }
+    .select-wrap select { appearance: none; border: 1px solid var(--line); background: white; border-radius: 12px; height: 43px; padding: 0 29px 0 13px; min-width: 115px; font-size: 12px; font-weight: 650; color: #3b3b45; }
+    .select-wrap::after { content: "⌄"; position: absolute; right: 12px; top: 9px; pointer-events: none; color: #898996; }
+    .year-control { display: flex; align-items: center; gap: 4px; background: #f7f7f9; border: 1px solid var(--line); border-radius: 12px; height: 43px; padding: 4px; }
+    .year-control strong { padding-inline: 6px; font-size: 13px; min-width: 42px; text-align: center; }
+    .tiny-btn { border: none; width: 31px; height: 31px; background: transparent; border-radius: 8px; color: #6f707d; font-size: 23px; line-height: 1; }
+    .tiny-btn:hover { background: white; color: var(--red); }
+    .months-wrap { border-top: 1px solid #f1f1f3; }
+    .months-scroll { display: flex; overflow-x: auto; scrollbar-width: thin; scrollbar-color: #d8d8e1 transparent; gap: 5px; padding-top: 10px; padding-bottom: 10px; }
+    .month-btn { flex: 1 0 auto; min-width: 76px; border: none; background: transparent; border-radius: 10px; color: #72717e; padding: 10px 8px; font-weight: 650; font-size: 12px; }
+    .month-btn:hover { background: #fff3f4; color: #ca1426; }
+    .month-btn.active { color: white; background: var(--red); box-shadow: 0 4px 13px #ed233238; }
+    .filters-wrap { border-top: 1px solid #f1f1f3; }
+    .filters { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 10px; padding-bottom: 11px; }
+    .filter-list { display: flex; align-items: center; gap: 6px; overflow-x: auto; scrollbar-width: none; min-width: 0; }
+    .filter-list::-webkit-scrollbar { display:none; }
+    .filter-btn { flex: none; display: flex; gap: 7px; align-items: center; white-space: nowrap; background: white; border: 1px solid transparent; border-radius: 100px; padding: 8px 12px; color: #85838f; font-size: 12px; font-weight: 650; }
+    .filter-btn:hover { color: var(--red); background: #fff3f4; }
+    .filter-btn.active { color: #c91928; background: #fff0f1; border-color: #ffd9de; }
+    .filter-btn .count { font-size: 10px; color: inherit; opacity: .7; }
+    .view-switch { flex: none; display: flex; gap: 4px; border-radius: 11px; background: #f5f5f7; padding: 4px; }
+    .view-btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 10px; border-radius: 8px; background: transparent; color: #8b8994; border: none; font-size: 12px; font-weight: 650; }
+    .view-btn.active { background: white; color: #34313e; box-shadow: 0 1px 6px #24222c16; }
+    .view-btn .icon { width: 15px; height: 15px; }
+    main { padding-top: 30px; padding-bottom: 65px; }
+    .info-banner { display: flex; gap: 9px; align-items: flex-start; border: 1px solid #ffe5b7; background: #fff9eb; border-radius: 12px; padding: 12px 15px; color: #9a6e29; font-size: 12px; line-height: 1.55; margin-bottom: 26px; }
+    .info-banner svg { margin-top: 2px; }
+    .page-heading { display: flex; align-items: end; justify-content: space-between; gap: 12px; margin-bottom: 22px; }
+    .eyebrow { color: var(--red); text-transform: uppercase; letter-spacing: 1.5px; font-size: 10px; font-weight: 850; margin-bottom: 7px; }
+    h1 { font-size: clamp(24px, 4vw, 32px); letter-spacing: -.8px; margin: 0 0 7px; line-height: 1.15; }
+    .heading-note { color: var(--muted); font-size: 13px; }
+    .today-btn { flex: none; border: 1px solid #e7e6ec; border-radius: 10px; padding: 11px 15px; font-size: 12px; font-weight: 700; background: white; color: #504c59; }
+    .today-btn:hover { border-color: var(--red); color: var(--red); }
+    .cards { display: grid; gap: 19px; grid-template-columns: repeat(3, minmax(0,1fr)); }
+    .event-card { display: flex; flex-direction: column; overflow: hidden; border: 1px solid #ebeaf0; border-radius: 19px; background: #fff; box-shadow: var(--shadow); min-height: 310px; transition: transform .15s,box-shadow .15s; }
+    .event-card:hover { transform: translateY(-3px); box-shadow: 0 10px 35px rgba(33,31,45,.10); }
+    .event-cover { height: 150px; position: relative; overflow: hidden; background: linear-gradient(130deg,#ffeded,#f7dadd); display: grid; place-items: center; }
+    .event-cover.tone-1 { background: linear-gradient(125deg, #e9efff, #d4dcf5); }
+    .event-cover.tone-2 { background: linear-gradient(125deg, #efe8ff, #e1d4fc); }
+    .event-cover.tone-3 { background: linear-gradient(125deg, #f7e6e2, #efc4bf); }
+    .event-cover.tone-4 { background: linear-gradient(125deg, #e2f3f0, #c9e9e2); }
+    .event-cover::before, .event-cover::after { content: ""; position: absolute; display: block; width: 178px; height: 178px; border: 1px solid #ffffff8a; border-radius: 44px; transform: rotate(34deg); }
+    .event-cover::after { width: 112px; height: 112px; border-radius: 50%; background: #ffffff24; transform: translate(65px,-25px); }
+    .event-cover img { width: 100%; height: 100%; object-fit: contain; position: relative; z-index: 1; }
+    .cover-star { color: #ffffffcf; font-size: 79px; line-height: 1; z-index: 1; filter: drop-shadow(0 6px 10px #9b6c902b); user-select: none; }
+    .cover-caption { position: absolute; z-index: 2; bottom: 12px; left: 14px; background: #ffffffd9; border: 1px solid #ffffffa0; border-radius: 8px; font-size: 10px; color: #6c6570; padding: 6px 8px; font-weight: 650; }
+    .cover-language { position: absolute; top: 12px; left: 13px; z-index: 2; color: #242431; background: #fffffff2; box-shadow: 0 2px 8px #00000012; font-weight: 800; font-size: 11px; padding: 6px 9px; border-radius: 8px; }
+    .event-content { padding: 17px 17px 16px; display: flex; flex-direction: column; flex: 1; }
+    .circle-link { color: inherit; text-decoration: none; border-bottom: 1px dotted currentColor; }
+    .circle-link:hover { color: var(--red); }
+    .info-banner.synced { border-color: #d4eada; background: #f2fcf4; color: #376d4c; }
+    .event-overline { color: #9694a0; font-size: 10px; font-weight: 750; letter-spacing: .55px; text-transform: uppercase; margin-bottom: 7px; }
+    .event-name { font-size: 16px; font-weight: 800; line-height: 1.35; margin: 0 0 13px; min-height: 42px; overflow-wrap: anywhere; }
+    .event-date { display: flex; gap: 7px; align-items: center; color: #72707d; font-size: 12px; margin-bottom: 16px; }
+    .event-date .icon { color: #898794; width: 15px; height: 15px; }
+    .event-bottom { display: flex; align-items: center; justify-content: space-between; margin-top: auto; border-top: 1px solid #f0eff3; padding-top: 13px; gap: 8px; }
+    .status { display: inline-flex; align-items: center; gap: 6px; border-radius: 30px; padding: 6px 9px; font-size: 11px; font-weight: 750; line-height: 1; white-space: nowrap; }
+    .status::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+    .status-ongoing { color: #167447; background: #e8f7ed; }
+    .status-upcoming { color: #a46a11; background: #fff3dc; }
+    .status-past { color: #777684; background: #f1f1f4; }
+    .status-cancelled { color: #bd2639; background: #ffe9ec; }
+    .details-btn { border: none; background: transparent; color: #e12232; font-size: 12px; font-weight: 800; white-space: nowrap; padding: 7px 1px; }
+    .details-btn:hover { color: #a80d20; }
+    .empty { background: white; border: 1px dashed #e2e0e7; border-radius: 20px; padding: 60px 16px; text-align: center; color: var(--muted); }
+    .empty-illustration { font-size: 38px; color: #dcdae0; margin-bottom: 12px; }
+    .empty strong { color: var(--text); display: block; margin-bottom: 8px; font-size: 18px; }
+    .empty p { font-size: 13px; line-height: 1.6; margin: 0; }
+    .calendar-board { background: white; border-radius: 17px; overflow: hidden; border: 1px solid var(--line); box-shadow: var(--shadow); }
+    .calendar-weekdays,.calendar-days { display: grid; grid-template-columns: repeat(7,minmax(0,1fr)); }
+    .weekday { background: #fafafc; color: #888692; border-bottom: 1px solid var(--line); padding: 13px; text-align: center; font-size: 11px; font-weight: 750; }
+    .calendar-day { min-height: 117px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 10px 7px 7px; min-width: 0; }
+    .calendar-day:nth-child(7n) { border-right: 0; }
+    .calendar-day.outside { background: #fbfbfc; }
+    .day-number { display: inline-flex; min-width: 25px; height: 25px; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #6d6b77; border-radius: 50%; }
+    .calendar-day.outside .day-number { color: #bdbbc3; }
+    .day-number.today { background: var(--red); color: #fff; }
+    .day-events { display: grid; gap: 3px; margin-top: 6px; }
+    .day-event { width: 100%; text-align: left; padding: 5px 6px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; border: none; border-left: 3px solid #db3a46; background: #fff1f2; color: #9e2432; border-radius: 5px; font-weight: 650; font-size: 10px; }
+    .day-event:hover { background: #ffe2e5; }
+    .day-event.cancelled { border-left-color: #bbb; color: #999; background: #f3f3f5; text-decoration: line-through; }
+    .calendar-hint { display:none; color:var(--muted); font-size:11px; padding:8px 2px; }
+    footer { padding: 22px 0 36px; border-top: 1px solid #e6e5ec; color: #a2a0aa; font-size: 11px; display: flex; justify-content: space-between; gap: 10px; }
+    footer a { color: #aa5260; text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+    dialog { width: min(700px, calc(100% - 28px)); border: none; padding: 0; border-radius: 21px; box-shadow: 0 22px 90px #13071240; max-height: min(90vh, 900px); overflow: auto; }
+    dialog::backdrop { background: #18131ab3; backdrop-filter: blur(3px); }
+    .detail-cover { height: 186px; display: grid; place-items: center; background: linear-gradient(130deg,#f7ced3,#f2ecef); position: relative; overflow: hidden; }
+    .detail-cover img { height: 100%; width: 100%; object-fit: contain; }
+    .detail-cover .cover-star { font-size: 94px; }
+    .close-detail { position: absolute; top: 14px; right: 14px; width: 35px; height: 35px; display: grid; place-items: center; border-radius: 50%; border: none; background: #fffffff0; color: #514953; font-size: 25px; z-index: 2; }
+    .detail-inner { padding: 26px 30px 32px; }
+    .detail-eyebrow { font-size: 11px; color: var(--red); text-transform: uppercase; font-weight: 800; letter-spacing: 1px; }
+    .detail-title { font-size: clamp(23px,4vw,29px); line-height: 1.22; margin: 8px 0 14px; font-weight: 850; }
+    .detail-headline { display:flex; gap: 8px; flex-wrap:wrap; align-items:center; margin-bottom: 22px; }
+    .lang-chip { background:#f3f3f6; color: #6c6977; border-radius: 24px; padding: 6px 10px; font-weight: 750; font-size: 11px; }
+    .detail-info { display:grid; gap: 0; border-top:1px solid var(--line); }
+    .detail-info-row { display: grid; grid-template-columns: 140px minmax(0,1fr); gap: 12px; padding: 15px 0; border-bottom: 1px solid var(--line); font-size: 13px; line-height: 1.5; }
+    .detail-info-row dt { font-weight: 700; color: #85818e; }
+    .detail-info-row dd { margin: 0; font-weight: 550; min-width: 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .detail-info-row a { color: #ce182a; text-decoration: none; border-bottom: 1px dotted currentColor; }
+    .detail-info-row a:hover { color: #961025; }
+    .detail-description { margin-top: 22px; font-size:13px; line-height:1.7; white-space:pre-wrap; color:#65636f; }
+    .muted-value { color: #a19eaa; font-weight: 450; }
+    .detail-legal { color: #a29da8; font-size: 11px; margin-top: 22px; }
+    @media (max-width: 1050px) { .cards { grid-template-columns: repeat(2,minmax(0,1fr)); } .toolbar { position: static; } .month-btn { min-width: 91px; } }
+    @media (max-width: 700px) {
+      .shell { padding-inline: 16px; }
+      .brand-row { min-height: 78px; }
+      .topbar { min-height: 78px; }
+      .brand-icon { height: 43px; width: 43px; font-size: 24px; border-radius: 13px; }
+      .brand { gap: 10px; }
+      .brand-title { font-size: 23px; }
+      .brand-subtitle { font-size: 9px; }
+      .brand-tag { font-size: 9px; padding: 7px 9px; }
+      .tool-row { flex-direction: column; align-items: stretch; gap: 9px; }
+      .search { width: 100%; max-width: none; flex: none; }
+      .settings { justify-content: space-between; }
+      .select-wrap { flex: 1; }
+      .select-wrap select { width: 100%; }
+      .months-scroll { margin-inline: -16px; padding-inline: 16px; }
+      .month-btn { flex: none; }
+      .filters { align-items: flex-start; }
+      .filter-list { margin-right: -6px; }
+      .filter-btn { padding: 8px 10px; }
+      .view-btn { padding: 8px; font-size: 0; gap: 0; }
+      .view-btn .icon { width: 17px; height: 17px; }
+      main { padding-top: 22px; }
+      .cards { grid-template-columns: 1fr; gap: 14px; }
+      .event-card { min-height: unset; }
+      .event-cover { height: 173px; }
+      .event-name { min-height: unset; }
+      .page-heading { align-items: start; }
+      .today-btn { padding: 10px; }
+      .calendar-board { overflow-x: auto; }
+      .calendar-weekdays,.calendar-days { min-width: 700px; }
+      .calendar-hint { display: block; }
+      .detail-inner { padding: 23px 19px; }
+      .detail-info-row { grid-template-columns: 95px minmax(0,1fr); }
+    }
+    @media (prefers-reduced-motion: reduce) { *,*:before,*:after { animation-duration:.01ms!important; scroll-behavior:auto!important; transition:none!important; } }
+  </style>
+</head>
+<body>
+  <svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden" xmlns="http://www.w3.org/2000/svg"><symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></symbol><symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18"/></symbol><symbol id="i-cards" viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="8" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/><rect x="13" y="13" width="8" height="8" rx="1"/></symbol><symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7h.01"/></symbol></svg>
+  <header class="topbar">
+    <div class="shell brand-row">
+      <div class="brand"><div class="brand-icon" aria-hidden="true"><span>✦</span></div><div><div class="brand-title">Kyodo Events</div><div class="brand-subtitle">Календарь ивентов Кёдо</div></div></div>
+      <div class="brand-right"><span class="brand-tag">Preview 0.2</span></div>
+    </div>
+  </header>
+  <section class="toolbar" aria-label="Фильтры календаря">
+    <div class="shell tool-row">
+      <label class="search"><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg><input id="searchInput" placeholder="Поиск по ивенту или кругу..." aria-label="Поиск ивентов" autocomplete="off"><button id="searchClear" class="clear-search" type="button" aria-label="Очистить поиск">×</button></label>
+      <div class="settings">
+        <label class="select-wrap"><select id="languageFilter" aria-label="Фильтр по языку"><option value="all">Все языки</option></select></label>
+        <div class="year-control"><button id="prevYear" class="tiny-btn" type="button" aria-label="Предыдущий год">‹</button><strong id="yearLabel">2026</strong><button id="nextYear" class="tiny-btn" type="button" aria-label="Следующий год">›</button></div>
+      </div>
+    </div>
+    <div class="months-wrap"><div class="shell months-scroll" id="months" role="group" aria-label="Выбрать месяц"></div></div>
+    <div class="filters-wrap"><div class="shell filters"><div class="filter-list" id="statusFilters" role="group" aria-label="Фильтр по статусу"></div><div class="view-switch" role="group" aria-label="Режим отображения"><button type="button" id="cardsView" class="view-btn active" aria-pressed="true" title="Карточки"><svg class="icon"><use href="#i-cards"/></svg>Карточки</button><button type="button" id="calendarView" class="view-btn" aria-pressed="false" title="Календарь"><svg class="icon"><use href="#i-cal"/></svg>Календарь</button></div></div></div>
+  </section>
+  <main class="shell">
+    <div class="info-banner" id="sourceBanner"><svg class="icon" aria-hidden="true"><use href="#i-info"/></svg><span id="sourceText">Превью: показаны ивенты со скриншота. После первого запуска синхронизации на GitHub данные заменятся на календарь Official Kyodo Events!</span></div>
+    <div class="page-heading"><div><div class="eyebrow">Календарь ивентов</div><h1 id="pageTitle">Октябрь 2026</h1><div class="heading-note" id="eventCount">Загрузка ивентов...</div></div><button type="button" id="todayButton" class="today-btn">Текущий месяц ↗</button></div>
+    <section id="cards" class="cards" aria-label="Карточки ивентов"></section>
+    <section id="calendar" aria-label="Календарная сетка" hidden></section>
+    <div id="emptyState" class="empty" hidden><div class="empty-illustration">✳</div><strong>Ничего не найдено</strong><p>Попробуй выбрать другой месяц, статус или изменить запрос.</p></div>
+  </main>
+  <footer class="shell"><span>Kyodo Events • независимый проект сообщества</span><a href="https://calendar.google.com/calendar/u/0/embed?src=c_397b4b3ccea8f0a91a944db587fc05e95690679f2b1dbeaeb7bd902416092d6a%40group.calendar.google.com&amp;ctz=America%2FNew_York" target="_blank" rel="noopener noreferrer">Оригинальный календарь ↗</a></footer>
+  <dialog id="detailsDialog" aria-labelledby="dialogTitle"><div id="detailBody"></div></dialog>
+  <script>
+    'use strict';
+    // Demo events are transcribed from the supplied calendar screenshot. They are NOT a live Google Calendar feed.
+    // Dates are inclusive and in YYYY-MM-DD format. A future importer should normalize timed and all-day events.
+    const DEMO_EVENTS = [
+      { id: 'masquerade', name: 'Masquerade: Nearing shadows', startDate:'2026-09-23', endDate:'2026-09-30', language:'DE', circle:'', circleUrl:'', prize:'', prizeImage:'' },
+      { id: 'mysterious-stars', name: 'Mysterious Stars', startDate:'2026-09-28', endDate:'2026-10-05', language:'RU', circle:'', circleUrl:'', prize:'', prizeImage:'' },
+      { id: 'moonstruck', name: 'Moonstruck', startDate:'2026-10-01', endDate:'2026-10-08', language:'EN', circle:'', circleUrl:'', prize:'', prizeImage:'' },
+      { id: 'witches-love-potion', name: 'The Witches Love Potion', startDate:'2026-10-05', endDate:'2026-10-12', language:'EN', circle:'', circleUrl:'', prize:'', prizeImage:'' },
+      { id: 'nightfall', name: 'Nightfall', startDate:'2026-10-09', endDate:'2026-10-16', language:'AR', circle:'', circleUrl:'', prize:'', prizeImage:'' },
+      { id: 'trick-or-terror', name: 'Trick or Terror', startDate:'2026-10-13', endDate:'2026-10-20', language:'PT', circle:'', circleUrl:'', prize:'', prizeImage:'' },
+      { id: 'tensura', name: 'Tensura', startDate:'2026-10-17', endDate:'2026-10-24', language:'AR', circle:'', circleUrl:'', prize:'', prizeImage:'' },
+      { id: 'queen-of-my-heart', name: 'Queen of My Heart', startDate:'2026-10-20', endDate:'2026-10-27', language:'EN', circle:'', circleUrl:'', prize:'', prizeImage:'' }
+    ];
+    const MONTHS = ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
+    const SHORT_MONTHS = ['янв.','фев.','мар.','апр.','мая','июн.','июл.','авг.','сен.','окт.','ноя.','дек.'];
+    const LANGUAGE_NAMES = { EN:'English', ES:'Spanish', PT:'Portuguese', FR:'French', RU:'Russian', DE:'German', AR:'Arabic' };
+    const STATUS_NAMES = {all:'Все', ongoing:'В процессе', upcoming:'Скоро', past:'Прошёл', cancelled:'Отменён'};
+    const state = { year: new Date().getFullYear(), month:new Date().getMonth(), status:'all', language:'all', query:'', mode:'cards', events: DEMO_EVENTS };
+    const $ = id => document.getElementById(id);
+    const esc = text => String(text ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+    const two = n => String(n).padStart(2,'0');
+    const isoDate = date => `${date.getFullYear()}-${two(date.getMonth()+1)}-${two(date.getDate())}`;
+    const parseDay = value => new Date(`${value}T12:00:00`);
+    const todayISO = () => { // Calendar is set to America/New_York
+      const parts = new Intl.DateTimeFormat('en-US',{timeZone:'America/New_York',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
+      const o = Object.fromEntries(parts.map(p=>[p.type,p.value]));
+      return `${o.year}-${o.month}-${o.day}`;
+    };
+    const monthStart = () => `${state.year}-${two(state.month+1)}-01`;
+    const monthEnd = () => `${state.year}-${two(state.month+1)}-${two(new Date(state.year,state.month+1,0).getDate())}`;
+    const plural = (n,a,b,c) => { const p=n%10, q=n%100; return n+' '+((q>=11&&q<=14)?c:p===1?a:(p>=2&&p<=4)?b:c); };
+    function safeUrl(url) {
+      if (!url || typeof url !== 'string') return '';
+      try { const parsed = new URL(url, document.baseURI); return ['https:','http:'].includes(parsed.protocol) ? parsed.href : ''; } catch {return '';}
+    }
+    function statusOf(e) {
+      if (e.cancelled || e.status === 'cancelled') return 'cancelled';
+      const t = todayISO();
+      return t < e.startDate ? 'upcoming' : t > e.endDate ? 'past' : 'ongoing';
+    }
+    function dateLabel(e) {
+      const start = parseDay(e.startDate), end = parseDay(e.endDate);
+      if (isNaN(start) || isNaN(end)) return 'Дата не указана';
+      const sameMonth = start.getMonth()===end.getMonth() && start.getFullYear()===end.getFullYear();
+      const fmt = date => `${date.getDate()} ${SHORT_MONTHS[date.getMonth()]}`;
+      return sameMonth ? `${start.getDate()}–${fmt(end)} ${end.getFullYear()}` : `${fmt(start)} – ${fmt(end)} ${end.getFullYear()}`;
+    }
+    function appearsInMonth(e) { return e.startDate <= monthEnd() && e.endDate >= monthStart(); }
+    function matchesSearch(e) {
+      const q = state.query.toLocaleLowerCase().trim();
+      return !q || [e.name, e.circle, e.language, LANGUAGE_NAMES[e.language]||'', e.description].filter(Boolean).join(' ').toLocaleLowerCase().includes(q);
+    }
+    function filteredBase() { return state.events.filter(e => appearsInMonth(e) && (state.language==='all' || e.language===state.language) && matchesSearch(e)); }
+    function filteredEvents() { return filteredBase().filter(e => state.status==='all'||statusOf(e)===state.status).sort((a,b)=>a.startDate.localeCompare(b.startDate)||a.name.localeCompare(b.name)); }
+    function coverTone(e) { let sum=0; for(let i=0;i<e.name.length;i++) sum += e.name.charCodeAt(i); return 'tone-'+(sum%5); }
+    function coverHtml(e, isDetail=false) {
+      const src = safeUrl(e.prizeImage);
+      const img = src ? `<img src="${esc(src)}" alt="${esc(e.prize||'Превью рамки')}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.hidden=false"><span class="cover-star" hidden>✦</span>` : `<span class="cover-star" aria-hidden="true">✦</span>`;
+      if (isDetail) return `<div class="detail-cover ${coverTone(e)}">${img}<button type="button" class="close-detail" id="closeDetail" aria-label="Закрыть">×</button></div>`;
+      return `<div class="event-cover ${coverTone(e)}"><span class="cover-language">${esc(e.language||'—')}</span>${img}${src?'':`<span class="cover-caption">Нет превью рамки</span>`}</div>`;
+    }
+    function renderMonths() {
+      $('yearLabel').textContent=state.year;
+      $('months').innerHTML = MONTHS.map((m,i)=>`<button type="button" class="month-btn ${state.month===i?'active':''}" data-month="${i}" aria-pressed="${state.month===i}">${m}</button>`).join('');
+      $('months').querySelectorAll('[data-month]').forEach(b=>b.addEventListener('click',()=>{state.month=Number(b.dataset.month);render();}));
+      const active=$('months').querySelector('.active');
+      if(active && $('months').scrollWidth > $('months').clientWidth) active.scrollIntoView({block:'nearest',inline:'center'});
+    }
+    function renderLanguageOptions() {
+      $('languageFilter').innerHTML = '<option value="all">Все языки</option>' + Object.entries(LANGUAGE_NAMES)
+        .map(([code,name])=>`<option value="${code}">${name} (${code})</option>`).join('');
+      $('languageFilter').value=state.language;
+    }
+    function renderFilters() {
+      const base=filteredBase();
+      $('statusFilters').innerHTML=Object.entries(STATUS_NAMES).map(([key,name])=>{
+        const count= key==='all'?base.length:base.filter(e=>statusOf(e)===key).length;
+        return `<button type="button" class="filter-btn ${state.status===key?'active':''}" data-status="${key}" aria-pressed="${state.status===key}">${name} <span class="count">${count}</span></button>`;
+      }).join('');
+      $('statusFilters').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{state.status=b.dataset.status;render();}));
+    }
+    function renderCards(events) {
+      $('cards').innerHTML=events.map(e=>`<article class="event-card">
+        ${coverHtml(e)}
+        <div class="event-content">
+          <div class="event-overline">${e.circleUrl ? `<a class="circle-link" href="${esc(safeUrl(e.circleUrl))}" target="_blank" rel="noopener noreferrer">${esc(e.circle||'Открыть круг')} ↗</a>` : esc(e.circle||'Круг не указан')}</div>
+          <h2 class="event-name">${esc(e.name)}</h2>
+          <div class="event-date"><svg class="icon" aria-hidden="true"><use href="#i-cal"/></svg>${esc(dateLabel(e))}</div>
+          <div class="event-bottom"><span class="status status-${statusOf(e)}">${STATUS_NAMES[statusOf(e)]}</span><button type="button" class="details-btn" data-id="${esc(e.id)}">Подробнее →</button></div>
+        </div>
+      </article>`).join('');
+      $('cards').querySelectorAll('[data-id]').forEach(b=>b.addEventListener('click',()=>openDetail(b.dataset.id)));
+    }
+    function renderCalendar(events) {
+      const first=new Date(state.year,state.month,1);
+      const shift=(first.getDay()+6)%7; // Monday-first, RU locale
+      const count=new Date(state.year,state.month+1,0).getDate();
+      const cells=Math.ceil((shift+count)/7)*7;
+      const week=['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
+      let html='<div class="calendar-hint">Календарь можно прокручивать по горизонтали →</div><div class="calendar-board"><div class="calendar-weekdays">'+week.map(d=>`<div class="weekday">${d}</div>`).join('')+'</div><div class="calendar-days">';
+      for(let i=0;i<cells;i++) {
+        const date=new Date(state.year,state.month,i-shift+1);
+        const day=isoDate(date); const outside=date.getMonth()!==state.month;
+        const onDay=events.filter(e=>e.startDate<=day&&e.endDate>=day);
+        html+=`<div class="calendar-day ${outside?'outside':''}"><span class="day-number ${day===todayISO()?'today':''}">${date.getDate()}</span><div class="day-events">${onDay.map(e=>`<button type="button" class="day-event ${statusOf(e)==='cancelled'?'cancelled':''}" title="${esc(e.name)}" data-id="${esc(e.id)}">${esc(e.name)}</button>`).join('')}</div></div>`;
+      }
+      $('calendar').innerHTML=html+'</div></div>';
+      $('calendar').querySelectorAll('[data-id]').forEach(b=>b.addEventListener('click',()=>openDetail(b.dataset.id)));
+    }
+    function openDetail(id) {
+      const e=state.events.find(item=>item.id===id); if(!e)return;
+      const circleHref = safeUrl(e.circleUrl);
+      const circleDisplay = e.circle || (circleHref ? 'Открыть круг' : 'Не указан');
+      const rows = [
+        ['Период', dateLabel(e)],
+        ['Язык', LANGUAGE_NAMES[e.language] ? `${LANGUAGE_NAMES[e.language]} (${e.language})` : 'Не указан'],
+        ['Круг', circleDisplay],
+        ['Рамка', e.prizeImage ? 'Превью прикреплено' : 'Нет доступного превью']
+      ];
+      $('detailBody').innerHTML=`${coverHtml(e,true)}<div class="detail-inner"><div class="detail-eyebrow">Kyodo · Ивент</div><h2 id="dialogTitle" class="detail-title">${esc(e.name)}</h2><div class="detail-headline"><span class="status status-${statusOf(e)}">${STATUS_NAMES[statusOf(e)]}</span><span class="lang-chip">${esc(e.language||'—')}</span></div><dl class="detail-info">${rows.map(([k,v])=>`<div class="detail-info-row"><dt>${esc(k)}</dt><dd>${k==='Круг' && circleHref ? `<a href="${esc(circleHref)}" target="_blank" rel="noopener noreferrer">${esc(v)} ↗</a>` : esc(v)}</dd></div>`).join('')}</dl><div class="detail-legal">Источник: публичный календарь Official Kyodo Events! · Часовой пояс America/New_York.</div></div>`;
+      $('detailsDialog').showModal();
+      $('closeDetail').addEventListener('click',()=>$('detailsDialog').close());
+    }
+    function render() {
+      renderMonths(); renderFilters();
+      const events=filteredEvents();
+      $('pageTitle').textContent=MONTHS[state.month]+' '+state.year;
+      $('eventCount').textContent=plural(events.length,'ивент','ивента','ивентов')+(state.status==='all'?' за выбранный месяц':' с выбранными фильтрами');
+      $('searchClear').classList.toggle('visible',!!state.query);
+      $('cardsView').classList.toggle('active',state.mode==='cards');
+      $('calendarView').classList.toggle('active',state.mode==='calendar');
+      $('cardsView').setAttribute('aria-pressed',String(state.mode==='cards'));
+      $('calendarView').setAttribute('aria-pressed',String(state.mode==='calendar'));
+      $('cards').hidden=state.mode!=='cards'||!events.length;
+      $('calendar').hidden=state.mode!=='calendar'||!events.length;
+      $('emptyState').hidden=!!events.length;
+      if (state.mode==='cards') renderCards(events); else if(events.length) renderCalendar(events);
+    }
+    function normalizeEvents(records) {
+      return records.filter(e=>e&&typeof e.name==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(e.startDate)&&/^\d{4}-\d{2}-\d{2}$/.test(e.endDate)&&e.startDate<=e.endDate)
+        .map((e,i)=>({id:String(e.id||`event-${i}`), name:e.name, startDate:e.startDate,endDate:e.endDate,language:String(e.language||''),circle:String(e.circle||''),circleUrl:String(e.circleUrl||''),prize:String(e.prize||''),prizeImage:String(e.prizeImage||''),description:String(e.description||''),cancelled:e.cancelled===true,status:e.status||''}));
+    }
+    $('prevYear').addEventListener('click',()=>{state.year--;render();});
+    $('nextYear').addEventListener('click',()=>{state.year++;render();});
+    $('todayButton').addEventListener('click',()=>{state.year=Number(todayISO().slice(0,4));state.month=Number(todayISO().slice(5,7))-1;state.status='all';state.language='all';state.query='';$('searchInput').value='';$('languageFilter').value='all';render();});
+    $('searchInput').addEventListener('input',e=>{state.query=e.target.value;render();});
+    $('searchClear').addEventListener('click',()=>{state.query='';$('searchInput').value='';render();$('searchInput').focus();});
+    $('languageFilter').addEventListener('change',e=>{state.language=e.target.value;render();});
+    $('cardsView').addEventListener('click',()=>{state.mode='cards';render();});
+    $('calendarView').addEventListener('click',()=>{state.mode='calendar';render();});
+    $('detailsDialog').addEventListener('click',e=>{if(e.target===$('detailsDialog'))$('detailsDialog').close();});
+    // Default view uses the calendar's local date, not visitor's local time zone.
+    state.year = Number(todayISO().slice(0,4)); state.month = Number(todayISO().slice(5,7))-1;
+    renderLanguageOptions(); render();
+    // events.json is produced by GitHub Actions from the public Google Calendar iCal feed.
+    if (location.protocol==='https:' || location.protocol==='http:') {
+      fetch('./events.json', {cache:'no-store'}).then(r=>r.ok?r.json():null).then(data=>{
+        if (!data) return;
+        const records = Array.isArray(data) ? data : data.events;
+        if (!Array.isArray(records)) return;
+        state.events=normalizeEvents(records);
+        renderLanguageOptions(); render();
+        const stamp = data.updatedAt && !Array.isArray(data)
+          ? ' · Последнее обновление: ' + new Date(data.updatedAt).toLocaleString('ru-RU') : '';
+        $('sourceText').textContent='Источник: публичный календарь Official Kyodo Events!'+stamp+'. Превью рамки появляются только при наличии доступного изображения.';
+        $('sourceBanner').classList.add('synced');
+      }).catch(()=>{});
+    }
+  </script>
+</body>
+</html>
