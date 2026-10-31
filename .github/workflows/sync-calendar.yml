@@ -1,0 +1,38 @@
+name: Sync Official Kyodo Events!
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Every six hours in UTC; scheduled runs can be delayed by GitHub.
+    - cron: '23 */6 * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: kyodo-calendar-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Download public iCal and create events.json
+        run: python scripts/sync_calendar.py
+      - name: Commit updated data (only if events changed)
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add events.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Sync Kyodo events calendar"
+            git push
+          else
+            echo "No calendar changes to commit"
+          fi
