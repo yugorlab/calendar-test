@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#ec202e">
   <meta name="description" content="Ивенты Kyodo по месяцам: поиск, фильтры по языку и статусу, календарь и рамки.">
-  <title>Kyodo Events — календарь ивентов</title>
+  <title>Kyodo Events — календарь ивентов | by YugorLAB</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -232,10 +232,13 @@
     <section id="calendar" aria-label="Календарная сетка" hidden></section>
     <div id="emptyState" class="empty" hidden><div class="empty-illustration">✳</div><strong>Ничего не найдено</strong><p>Попробуй выбрать другой месяц, статус или изменить запрос.</p></div>
   </main>
-  <footer class="shell"><span>Kyodo Events • независимый проект сообщества</span><a href="https://calendar.google.com/calendar/u/0/embed?src=c_397b4b3ccea8f0a91a944db587fc05e95690679f2b1dbeaeb7bd902416092d6a%40group.calendar.google.com&amp;ctz=America%2FNew_York" target="_blank" rel="noopener noreferrer">Оригинальный календарь ↗</a></footer>
+  <footer class="shell"><span>Kyodo Events • by <a href="https://github.com/yugorlab" target="_blank" rel="noopener noreferrer">YugorLAB</a></span><a href="https://calendar.google.com/calendar/u/0/embed?src=c_397b4b3ccea8f0a91a944db587fc05e95690679f2b1dbeaeb7bd902416092d6a%40group.calendar.google.com&amp;ctz=America%2FNew_York" target="_blank" rel="noopener noreferrer">Оригинальный календарь ↗</a>
+  </footer>
   <dialog id="detailsDialog" aria-labelledby="dialogTitle"><div id="detailBody"></div></dialog>
   <script>
     'use strict';
+
+    console.log('%cKyodo Events Calendar %cby YugorLAB', 'font-weight: bold; font-size: 16px; color: #ed2332;', 'font-size: 14px; color: #767785;');
     
     const DEMO_EVENTS = [
       { id: 'masquerade', name: 'Masquerade: Nearing shadows', startDate:'2026-09-23', endDate:'2026-09-30', language:'DE', circle:'', circleUrl:'', prize:'', prizeImage:'' },
