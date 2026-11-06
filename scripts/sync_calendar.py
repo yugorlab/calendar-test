@@ -172,9 +172,25 @@ def parse_event(event, override_date=None):
     if m and not as_url(m.group(1).strip()):
         circle = m.group(1).strip()
     cancelled = first(event,'STATUS').upper() == 'CANCELLED' or bool(re.match(r'^\s*(?:\[cancelled\]|\(cancelled\)|отмен[её]н(?:о|а)?:)',original,re.I))
-    uid = first(event,'UID') or (first(event,'SUMMARY')+start.isoformat())
-    # Deterministic hash prevents clashing even with recurring calendar events.
-    eid = hashlib.sha1((uid+'|'+start.isoformat()).encode('utf-8')).hexdigest()[:16]
+    uid = first(event, 'UID')
+
+if uid:
+    recurrence = event.get('RECURRENCE-ID', [])
+
+    if recurrence:
+        recurrence_value, recurrence_opts = recurrence[0]
+        recurrence_key = (
+            f"{recurrence_opts.get('TZID', '')}|"
+            f"{recurrence_opts.get('VALUE', '')}|"
+            f"{recurrence_value}"
+        )
+        identity = f"{uid}|{recurrence_key}"
+    else:
+        identity = uid
+else:
+    identity = first(event, 'SUMMARY') + start.isoformat()
+
+eid = hashlib.sha1(identity.encode('utf-8')).hexdigest()[:16]
     return {
         'id': eid,
         'name': original,
