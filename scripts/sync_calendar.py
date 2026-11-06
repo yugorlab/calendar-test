@@ -189,18 +189,18 @@ def parse_event(event, override_date=None):
     else:
         identity = first(event, 'SUMMARY') + start.isoformat()
         
-        eid = hashlib.sha1(identity.encode('utf-8')).hexdigest()[:16]
-        return {
-            'id': eid,
-            'name': original,
-            'startDate': start.isoformat(),
-            'endDate': end.isoformat(),
-            'language': lang,
-            'circle': circle,
-            'circleUrl': circle_url,
-            'prizeImage': event_picture(event, desc),
-            'cancelled': cancelled,
-        }
+    eid = hashlib.sha1(identity.encode('utf-8')).hexdigest()[:16]
+    return {
+        'id': eid,
+        'name': original,
+        'startDate': start.isoformat(),
+        'endDate': end.isoformat(),
+        'language': lang,
+        'circle': circle,
+        'circleUrl': circle_url,
+        'prizeImage': event_picture(event, desc),
+        'cancelled': cancelled,
+    }
 
 
 def convert(ics: str) -> list[dict]:
