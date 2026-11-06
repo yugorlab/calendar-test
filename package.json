@@ -1,0 +1,23 @@
+{
+  "name": "kyodo-events",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Android app wrapper for the Kyodo Events calendar",
+  "type": "module",
+  "scripts": {
+    "prepare:web": "node scripts/prepare-web.mjs",
+    "cap:add:android": "npx cap add android",
+    "cap:sync": "npm run prepare:web && npx cap sync android",
+    "android:open": "npx cap open android",
+    "android:debug": "npm run cap:sync && cd android && ./gradlew assembleDebug"
+  },
+  "dependencies": {
+    "@capacitor/android": "^8.0.0",
+    "@capacitor/core": "^8.0.0",
+    "@capacitor/local-notifications": "^8.0.0",
+    "@capacitor/preferences": "^8.0.0"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^8.0.0"
+  }
+}
