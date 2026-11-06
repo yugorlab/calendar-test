@@ -1,10 +1,10 @@
 {
   "calendar": "Official Kyodo Events!",
   "timezone": "America/New_York",
-  "updatedAt": "2026-10-31T16:24:10+00:00",
+  "updatedAt": "2026-11-06T22:19:30+00:00",
   "events": [
     {
-      "id": "80ef05ba382221c2",
+      "id": "a71a3fd70bb3dfdc",
       "name": "Sweet Dreamer",
       "startDate": "2026-04-01",
       "endDate": "2026-04-08",
@@ -15,7 +15,7 @@
       "cancelled": false
     },
     {
-      "id": "e8ce1f6d7e98f5ff",
+      "id": "fbda71577cdc22a5",
       "name": "No céu tem pão?",
       "startDate": "2026-04-05",
       "endDate": "2026-04-11",
@@ -26,7 +26,7 @@
       "cancelled": false
     },
     {
-      "id": "bbfa0d59b7dc4e51",
+      "id": "ae1ffe1bf9b546e8",
       "name": "Les quatre saisons",
       "startDate": "2026-04-06",
       "endDate": "2026-04-12",
@@ -37,7 +37,7 @@
       "cancelled": false
     },
     {
-      "id": "b58c8ca9fa2563e0",
+      "id": "bca46c0a1bf06a87",
       "name": "Starry Skies",
       "startDate": "2026-04-07",
       "endDate": "2026-04-14",
@@ -48,7 +48,7 @@
       "cancelled": false
     },
     {
-      "id": "4fef9b6c6513c7ad",
+      "id": "bf01abcd6a5048d9",
       "name": "Girlz Rock",
       "startDate": "2026-04-14",
       "endDate": "2026-04-21",
@@ -59,7 +59,7 @@
       "cancelled": false
     },
     {
-      "id": "ff888f6d88ce5ea0",
+      "id": "154961bf2e5609e3",
       "name": "Bunny Bloom",
       "startDate": "2026-04-15",
       "endDate": "2026-04-22",
@@ -70,7 +70,7 @@
       "cancelled": false
     },
     {
-      "id": "fd5243adabcad144",
+      "id": "7dcd5d2796eb64fc",
       "name": "International Anime Day",
       "startDate": "2026-04-15",
       "endDate": "2026-04-23",
@@ -81,7 +81,7 @@
       "cancelled": false
     },
     {
-      "id": "401881522bf3b7c9",
+      "id": "73d0afc3f85db5a4",
       "name": "Save Sea Lives",
       "startDate": "2026-04-22",
       "endDate": "2026-04-29",
@@ -92,7 +92,7 @@
       "cancelled": false
     },
     {
-      "id": "3fd144a3721e9664",
+      "id": "fefed531783bf510",
       "name": "Statue of Beauty",
       "startDate": "2026-04-29",
       "endDate": "2026-05-06",
@@ -103,7 +103,7 @@
       "cancelled": false
     },
     {
-      "id": "6a042f0640bcfb2a",
+      "id": "5319201d50604f1b",
       "name": "Find Each Other",
       "startDate": "2026-05-01",
       "endDate": "2026-05-07",
@@ -114,7 +114,7 @@
       "cancelled": false
     },
     {
-      "id": "db90007bb08285a8",
+      "id": "16281761efd8de3a",
       "name": "Para todas as mães!",
       "startDate": "2026-05-03",
       "endDate": "2026-05-10",
@@ -125,7 +125,7 @@
       "cancelled": false
     },
     {
-      "id": "b0a8c550cb9be7f2",
+      "id": "b7b878eb4a6655b8",
       "name": "Fazparty",
       "startDate": "2026-05-05",
       "endDate": "2026-05-12",
@@ -136,7 +136,7 @@
       "cancelled": false
     },
     {
-      "id": "e17a8a78ef1b30c3",
+      "id": "29ebd05fe01218ae",
       "name": "Hunting for the Rust-Eating Mushroom",
       "startDate": "2026-05-14",
       "endDate": "2026-05-20",
@@ -147,7 +147,7 @@
       "cancelled": false
     },
     {
-      "id": "7a41d9c5d13d50cc",
+      "id": "ef284dced6663bcf",
       "name": "Cupcake Party",
       "startDate": "2026-05-15",
       "endDate": "2026-05-22",
@@ -158,7 +158,7 @@
       "cancelled": false
     },
     {
-      "id": "33fef4e6cb795c64",
+      "id": "ce39b7d37dc45c8f",
       "name": "Constellation",
       "startDate": "2026-05-16",
       "endDate": "2026-05-22",
@@ -169,7 +169,7 @@
       "cancelled": false
     },
     {
-      "id": "d3bc37cb984327dc",
+      "id": "d14121dc47ef7459",
       "name": "Kyodo Anniversary Event",
       "startDate": "2026-05-17",
       "endDate": "2026-05-22",
@@ -180,7 +180,7 @@
       "cancelled": false
     },
     {
-      "id": "d391a82bcd32a474",
+      "id": "c7a48924c27129be",
       "name": "Otaku Events",
       "startDate": "2026-05-20",
       "endDate": "2026-05-27",
@@ -191,7 +191,7 @@
       "cancelled": false
     },
     {
-      "id": "624b7948b029a0f0",
+      "id": "1b8d8db3b4b74a7b",
       "name": "Blue Melody",
       "startDate": "2026-05-27",
       "endDate": "2026-05-31",
@@ -202,7 +202,7 @@
       "cancelled": false
     },
     {
-      "id": "ef96b2cf2cc28ff9",
+      "id": "2036a75180869d87",
       "name": "Rainbow Rewind",
       "startDate": "2026-06-01",
       "endDate": "2026-06-08",
@@ -213,7 +213,7 @@
       "cancelled": false
     },
     {
-      "id": "bf3c7274c98e8f61",
+      "id": "45ac73b5e8f2eca6",
       "name": "King Of Curses Event",
       "startDate": "2026-06-04",
       "endDate": "2026-06-10",
@@ -224,7 +224,7 @@
       "cancelled": false
     },
     {
-      "id": "fc272a8c3946091e",
+      "id": "3d57c2f5cab18686",
       "name": "Safe Space",
       "startDate": "2026-06-07",
       "endDate": "2026-06-14",
@@ -235,7 +235,7 @@
       "cancelled": false
     },
     {
-      "id": "631df7e4a5031c45",
+      "id": "fdb3788d19d98973",
       "name": "Be As You Are!",
       "startDate": "2026-06-12",
       "endDate": "2026-06-19",
@@ -246,7 +246,7 @@
       "cancelled": false
     },
     {
-      "id": "facdcc5f19e53d81",
+      "id": "f367c01fdc534f0a",
       "name": "Pachanga Enkantada",
       "startDate": "2026-06-15",
       "endDate": "2026-06-21",
@@ -257,7 +257,7 @@
       "cancelled": false
     },
     {
-      "id": "bc0166ba13efd2a1",
+      "id": "ace148b256e1b1bb",
       "name": "Insectival",
       "startDate": "2026-06-22",
       "endDate": "2026-06-28",
@@ -268,7 +268,7 @@
       "cancelled": false
     },
     {
-      "id": "15077998816531ab",
+      "id": "4afd7ade0c710e9a",
       "name": "boraland",
       "startDate": "2026-06-24",
       "endDate": "2026-06-30",
@@ -279,7 +279,7 @@
       "cancelled": false
     },
     {
-      "id": "1a8bb86a361d9741",
+      "id": "c408ccacefbe7e32",
       "name": "In the Name of the Sun",
       "startDate": "2026-07-01",
       "endDate": "2026-07-07",
@@ -290,7 +290,7 @@
       "cancelled": false
     },
     {
-      "id": "c50a10fedce17df1",
+      "id": "de752ccc7ccdab1a",
       "name": "Fierce Wings",
       "startDate": "2026-07-04",
       "endDate": "2026-07-10",
@@ -301,7 +301,7 @@
       "cancelled": false
     },
     {
-      "id": "bf9c9310a7a864d1",
+      "id": "f7b252a66e526b40",
       "name": "Vocaloid",
       "startDate": "2026-07-08",
       "endDate": "2026-07-14",
@@ -312,7 +312,7 @@
       "cancelled": false
     },
     {
-      "id": "e9529f597ea7b999",
+      "id": "4edc3daff3961b0e",
       "name": "Você pode sobreviver?",
       "startDate": "2026-07-12",
       "endDate": "2026-07-19",
@@ -323,7 +323,7 @@
       "cancelled": false
     },
     {
-      "id": "bc201c1e3192f242",
+      "id": "443ed452cabfae90",
       "name": "Shadow Theater",
       "startDate": "2026-07-16",
       "endDate": "2026-07-23",
@@ -334,7 +334,7 @@
       "cancelled": false
     },
     {
-      "id": "f06b162fad0139bb",
+      "id": "f07baaf885f97419",
       "name": "OCs, creativity and fun !!",
       "startDate": "2026-07-20",
       "endDate": "2026-07-27",
@@ -345,7 +345,7 @@
       "cancelled": false
     },
     {
-      "id": "c7174093b83c5bf4",
+      "id": "0aed5d04db86e1d6",
       "name": "The Great Escape",
       "startDate": "2026-07-24",
       "endDate": "2026-07-31",
@@ -356,7 +356,7 @@
       "cancelled": false
     },
     {
-      "id": "badd3cbed8ffe9bd",
+      "id": "993b52bf4b3f4024",
       "name": "Lirio de araña carmesí",
       "startDate": "2026-07-30",
       "endDate": "2026-08-06",
@@ -367,7 +367,7 @@
       "cancelled": false
     },
     {
-      "id": "5f5339a88930fe00",
+      "id": "c7aa797f8503c978",
       "name": "Moment in Time",
       "startDate": "2026-08-02",
       "endDate": "2026-08-09",
@@ -378,7 +378,7 @@
       "cancelled": false
     },
     {
-      "id": "c0259a66afe94ca2",
+      "id": "ed90d0f16a53abce",
       "name": "Honoring Pets",
       "startDate": "2026-08-06",
       "endDate": "2026-08-13",
@@ -389,7 +389,7 @@
       "cancelled": false
     },
     {
-      "id": "87d0ecc91cd2b913",
+      "id": "af3e99cfa1b2c969",
       "name": "Wings of Alycon",
       "startDate": "2026-08-11",
       "endDate": "2026-08-18",
@@ -400,7 +400,7 @@
       "cancelled": false
     },
     {
-      "id": "628019f26bbd6e4a",
+      "id": "19050cccfe43e7dc",
       "name": "Magic and Memories",
       "startDate": "2026-08-16",
       "endDate": "2026-08-23",
@@ -411,7 +411,7 @@
       "cancelled": false
     },
     {
-      "id": "1dea12704427c76e",
+      "id": "30405b399bccb808",
       "name": "Scarlet Chaos",
       "startDate": "2026-08-24",
       "endDate": "2026-08-31",
@@ -422,7 +422,7 @@
       "cancelled": false
     },
     {
-      "id": "4cd238a203f6dfa5",
+      "id": "1681f9193541573d",
       "name": "(ESP) Picnic Time with My Melody!",
       "startDate": "2026-08-30",
       "endDate": "2026-09-06",
@@ -433,7 +433,7 @@
       "cancelled": false
     },
     {
-      "id": "5d88aaa25dc22eef",
+      "id": "c9ee04180fc7c6d0",
       "name": "Kyuu in Wonderland",
       "startDate": "2026-09-02",
       "endDate": "2026-09-09",
@@ -444,7 +444,7 @@
       "cancelled": false
     },
     {
-      "id": "eb9e4120052876bd",
+      "id": "8b89bddfb579ebd1",
       "name": "Snowyaki",
       "startDate": "2026-09-10",
       "endDate": "2026-09-17",
@@ -455,7 +455,7 @@
       "cancelled": false
     },
     {
-      "id": "744a8676d08f2009",
+      "id": "b83707eabf497cba",
       "name": "A Journey Through the Wild West",
       "startDate": "2026-09-20",
       "endDate": "2026-09-27",
@@ -466,7 +466,7 @@
       "cancelled": false
     },
     {
-      "id": "1cef2bd82ab70203",
+      "id": "3e73dfa6cdbae8e6",
       "name": "Masquerade: Nearing shadows",
       "startDate": "2026-09-23",
       "endDate": "2026-09-30",
@@ -477,7 +477,7 @@
       "cancelled": false
     },
     {
-      "id": "b10e7a5af6eaa905",
+      "id": "cc950dfbc062f59b",
       "name": "Mysterious Stars",
       "startDate": "2026-09-28",
       "endDate": "2026-10-05",
@@ -488,7 +488,7 @@
       "cancelled": false
     },
     {
-      "id": "d9f52f14ecf18cfe",
+      "id": "006243476ac7072a",
       "name": "Moonstruck",
       "startDate": "2026-10-01",
       "endDate": "2026-10-08",
@@ -499,7 +499,7 @@
       "cancelled": false
     },
     {
-      "id": "c5aba5863a5ed719",
+      "id": "4d8a4f750525f892",
       "name": "The Witches Love Potion",
       "startDate": "2026-10-05",
       "endDate": "2026-10-12",
@@ -510,7 +510,7 @@
       "cancelled": false
     },
     {
-      "id": "c4a8da5d89feebef",
+      "id": "304df4e4df6f928c",
       "name": "Nightfall",
       "startDate": "2026-10-09",
       "endDate": "2026-10-16",
@@ -521,7 +521,7 @@
       "cancelled": false
     },
     {
-      "id": "939278997268dc1f",
+      "id": "f914bb57ad92a22b",
       "name": "Trick or Terror",
       "startDate": "2026-10-13",
       "endDate": "2026-10-20",
@@ -532,7 +532,7 @@
       "cancelled": false
     },
     {
-      "id": "9696d1b839512385",
+      "id": "7f4b05bdd80eaf36",
       "name": "Tensura",
       "startDate": "2026-10-17",
       "endDate": "2026-10-24",
@@ -543,7 +543,7 @@
       "cancelled": false
     },
     {
-      "id": "53b109cba83d743b",
+      "id": "72596b8de2da5e81",
       "name": "Queen of My Heart",
       "startDate": "2026-10-20",
       "endDate": "2026-10-27",
@@ -554,7 +554,7 @@
       "cancelled": false
     },
     {
-      "id": "409525873229f5a0",
+      "id": "84121b33ade827c9",
       "name": "GLOBAL - Kursed Kitchen",
       "startDate": "2026-10-26",
       "endDate": "2026-10-31",
@@ -565,7 +565,7 @@
       "cancelled": false
     },
     {
-      "id": "efbc4cd36c1c1c03",
+      "id": "a8ea095ce1a02cd4",
       "name": "(ESP) Dia de Los Muertos",
       "startDate": "2026-11-01",
       "endDate": "2026-11-04",
@@ -576,7 +576,7 @@
       "cancelled": false
     },
     {
-      "id": "4c23a7e21dfa7068",
+      "id": "bce50494d63003d0",
       "name": "Night of the Lion",
       "startDate": "2026-11-01",
       "endDate": "2026-11-08",
@@ -587,7 +587,7 @@
       "cancelled": false
     },
     {
-      "id": "cbe18b4b093dd0ea",
+      "id": "4c8ea8d09dd16e25",
       "name": "Beyond The Wish (BTW)",
       "startDate": "2026-11-03",
       "endDate": "2026-11-10",
@@ -598,7 +598,7 @@
       "cancelled": false
     },
     {
-      "id": "1535425d28b4c4a4",
+      "id": "bb7563c94e982918",
       "name": "Path of the Hero",
       "startDate": "2026-11-08",
       "endDate": "2026-11-15",
@@ -609,7 +609,7 @@
       "cancelled": false
     },
     {
-      "id": "61d954015b7cf966",
+      "id": "2f66b9fb80bb1f6f",
       "name": "Roleplay",
       "startDate": "2026-11-12",
       "endDate": "2026-11-19",
@@ -620,7 +620,7 @@
       "cancelled": false
     },
     {
-      "id": "611d96c9c517a85b",
+      "id": "ca16f81b8c838250",
       "name": "Get a Guitar!",
       "startDate": "2026-11-18",
       "endDate": "2026-11-25",
@@ -631,7 +631,7 @@
       "cancelled": false
     },
     {
-      "id": "eeec65f455e71240",
+      "id": "2866b6913547540d",
       "name": "The Blip",
       "startDate": "2026-11-23",
       "endDate": "2026-11-30",
@@ -642,7 +642,7 @@
       "cancelled": false
     },
     {
-      "id": "1d88d641350edefc",
+      "id": "e162c75273a9b473",
       "name": "Blooming Days",
       "startDate": "2026-11-28",
       "endDate": "2026-12-04",
